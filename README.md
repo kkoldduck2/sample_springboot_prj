@@ -31,6 +31,9 @@ IntelliJ의 Run > Edit Configurations에서 VM options에 아래 항목 추가:
 -Delastic.apm.application_packages=com.example.demo
 ```
 ### 3. 애플리케이션 실행
+```bash
+./mvnw spring-boot:run
+```
 
 ### 참고) 요구사항
 Java 17 이상
