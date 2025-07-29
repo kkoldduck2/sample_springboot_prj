@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <!-- 타임스탬프 -->
+                <timestamp>
+                    <fieldName>timestamp</fieldName>
+                </timestamp>
+
+                <!-- 로그 레벨 -->
+                <logLevel>
+                    <fieldName>level</fieldName>
+                </logLevel>
+
+                <!-- 스레드 -->
+                <threadName>
+                    <fieldName>thread</fieldName>
+                </threadName>
+
+                <!-- 로그 메시지 -->
+                <message>
+                    <fieldName>message</fieldName>
+                </message>
+
+                <!-- MDC 정보 (있을 경우, 예: traceId) -->
+                <!-- APM 연동된 MDC 키들 출력 -->
+                <mdc>
+                    <includeKeys>trace.id,transaction.id,span.id,service.name</includeKeys>
+                </mdc>
+
+                <!-- 예외 정보 -->
+                <stackTrace>
+                    <fieldName>stacktrace</fieldName>
+                </stackTrace>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="JSON_CONSOLE" />
+    </root>
+</configuration>
