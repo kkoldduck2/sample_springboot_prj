@@ -1,0 +1,48 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [main]
+
+env:
+  IMAGE_NAME: my-springboot-apm-app  # 원하면 네가 원하는 이름으로 변경
+  DOCKER_REPO: ${{ secrets.DOCKER_USERNAME }}/my-springboot-apm-app
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Build Spring Boot app
+        run: mvn clean package -DskipTests
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.DOCKER_REPO }}:latest
+          build-args: |
+            ELASTIC_APM_SERVER_URLS=${{ secrets.APM_SERVER_URLS }}
+            ELASTIC_APM_SECRET_TOKEN=${{ secrets.APM_SECRET_TOKEN }}
+            ELASTIC_APM_PACKAGES=com.example
+            ELASTIC_APM_ENVIRONMENT=prod
