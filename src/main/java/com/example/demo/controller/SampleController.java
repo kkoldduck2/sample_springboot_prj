@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.slf4j.MDC;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,9 +24,31 @@ public class SampleController {
     @LogTransaction(svcName = "/start")
     @GetMapping("/start")
     public ResponseEntity<String> start() {
+
+
         HttpEntity<Object> entity = RestTemplateUtil.buildEmptyRequestWithTracingHeaders(1);
         restTemplate.exchange("http://localhost:8080/child", HttpMethod.GET, entity, String.class);
         return ResponseEntity.ok("done");
+    }
+
+    @LogTransaction(svcName = "/start_msa")
+    @GetMapping("/start_msa")
+    public ResponseEntity<String> start_msa() {
+        try {
+            HttpEntity<Object> entity = RestTemplateUtil.buildEmptyRequestWithTracingHeaders(1);
+            restTemplate.exchange("http://localhost:8080/child", HttpMethod.GET, entity, String.class);
+
+            HttpEntity<Object> entity2 = RestTemplateUtil.buildEmptyRequestWithTracingHeaders(2);
+            restTemplate.exchange("http://localhost:8080/child", HttpMethod.GET, entity2, String.class);
+
+            HttpEntity<Object> entity3 = RestTemplateUtil.buildEmptyRequestWithTracingHeaders(3);
+            restTemplate.exchange("http://localhost:8080/child", HttpMethod.GET, entity3, String.class);
+
+            return ResponseEntity.ok("done");
+
+        } catch (Exception e) {
+            throw e; // 다시 던지면 AOP에서 한 번 더 찍혀도 되고, 안 던지면 여기서 끝
+        }
     }
 
     @LogTransaction(svcName = "/child")

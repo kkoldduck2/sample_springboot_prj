@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import co.elastic.apm.api.ElasticApm;
+import co.elastic.apm.api.Transaction;
 
 @Component
 public class TraceFilter implements Filter {
@@ -30,6 +32,10 @@ public class TraceFilter implements Filter {
 
         if (globalNo == null || globalNo.isBlank()) globalNo = generateGlobalNo();
         if (topologySeq == null || topologySeq.isBlank()) topologySeq = DEFAULT_TOPOLOGY;
+
+        // apm에 topologySeq 추가
+        Transaction transaction = ElasticApm.currentTransaction();
+        transaction.setLabel("labels.topologySeq", topologySeq);
 
         LoggingContextUtil.initContext(globalNo, topologySeq);
         try {
