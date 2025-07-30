@@ -35,7 +35,7 @@ public class TraceFilter implements Filter {
 
         // apm에 topologySeq 추가
         Transaction transaction = ElasticApm.currentTransaction();
-        transaction.setLabel("labels.topologySeq", topologySeq);
+        transaction.setLabel("topologySeq", topologySeq);
 
         LoggingContextUtil.initContext(globalNo, topologySeq);
         try {
