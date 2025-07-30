@@ -9,12 +9,14 @@ public class LoggingContextUtil {
 
     public static final String MDC_GLOBAL_NO = "GLOBAL_NO";
     public static final String MDC_TOPOLOGY_SEQ = "TOPOLOGY_SEQ";
-    public static final String CATEGORY = "CATEGORY";
+    public static final String MDC_CATEGORY = "CATEGORY";
+    public static final String MDC_SERVICE = "CATEGORY";
 
     public static void initContext(String globalNo, String topologySeq) {
         MDC.put(MDC_GLOBAL_NO, globalNo);
         MDC.put(MDC_TOPOLOGY_SEQ, topologySeq);
-        MDC.put(CATEGORY, "MON");
+        MDC.put(MDC_CATEGORY, "MON");
+        MDC.put(MDC_SERVICE, "my-spring-service");
     }
 
     public static void clear() {

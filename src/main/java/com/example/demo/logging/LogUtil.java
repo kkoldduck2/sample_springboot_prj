@@ -22,7 +22,7 @@ public class LogUtil {
         header.put("appName", "NBSS_TORD");
         header.put("svcName", svcName);
         header.put("globalNo", LoggingContextUtil.getGlobalNo());
-        header.put("responseSystem", "icis-oder-baseinfo");
+        header.put("responseSystem", "my-spring-service");
         header.put("lgDateTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
         header.put("trDate", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
         header.put("trTime", LocalTime.now().format(DateTimeFormatter.ofPattern("HHmmssSSS")));
