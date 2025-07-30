@@ -7,9 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.slf4j.MDC;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 public class SampleController {
+
+    private static final Logger log = LoggerFactory.getLogger(SampleController.class);
 
     @Autowired
     RestTemplate restTemplate;

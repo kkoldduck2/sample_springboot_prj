@@ -15,6 +15,9 @@ public class LoggingContextUtil {
         MDC.put(MDC_GLOBAL_NO, globalNo);
         MDC.put(MDC_TOPOLOGY_SEQ, topologySeq);
         MDC.put(CATEGORY, "MON");
+
+//        System.out.println("trace.id 추적 : " + MDC.get("trace.id"));
+//        System.out.println("trace.id 추적 : " + MDC.get("transaction.id"));
     }
 
     public static void clear() {
