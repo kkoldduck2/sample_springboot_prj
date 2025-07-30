@@ -10,7 +10,7 @@ public class LoggingContextUtil {
     public static final String MDC_GLOBAL_NO = "GLOBAL_NO";
     public static final String MDC_TOPOLOGY_SEQ = "TOPOLOGY_SEQ";
     public static final String MDC_CATEGORY = "CATEGORY";
-    public static final String MDC_SERVICE = "CATEGORY";
+    public static final String MDC_SERVICE = "SERVICE";
 
     public static void initContext(String globalNo, String topologySeq) {
         MDC.put(MDC_GLOBAL_NO, globalNo);
@@ -25,6 +25,10 @@ public class LoggingContextUtil {
 
     public static String getGlobalNo() {
         return MDC.get(MDC_GLOBAL_NO);
+    }
+
+    public static String getResponseSystem() {
+        return MDC.get(MDC_SERVICE);
     }
 
     public static String getTopologySeq() {
