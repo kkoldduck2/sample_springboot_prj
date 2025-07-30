@@ -38,3 +38,9 @@ IntelliJ의 Run > Edit Configurations에서 VM options에 아래 항목 추가:
 ### 참고) 요구사항
 Java 17 이상
 Maven 3.8+ (권장)
+
+
+# 호출
+```bash
+curl http://localhost:8080/start
+```
