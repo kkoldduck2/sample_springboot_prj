@@ -6,36 +6,32 @@
     <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
-                <!-- 타임스탬프 -->
+                <!-- 날짜 -->
                 <timestamp>
-                    <fieldName>timestamp</fieldName>
+                    <fieldName>DATE</fieldName>
+                    <pattern>yyyyMMddHHmmssSSS</pattern>
                 </timestamp>
 
                 <!-- 로그 레벨 -->
                 <logLevel>
-                    <fieldName>level</fieldName>
+                    <fieldName>LOG-LEVEL</fieldName>
                 </logLevel>
 
-                <!-- 스레드 -->
-                <threadName>
-                    <fieldName>thread</fieldName>
-                </threadName>
+                <!-- 호출 위치 -->
+                <loggerName>
+                    <fieldName>SOURCE</fieldName>
+                </loggerName>
 
-                <!-- 로그 메시지 -->
-                <message>
-                    <fieldName>message</fieldName>
-                </message>
-
-                <!-- MDC 정보 (있을 경우, 예: traceId) -->
-                <!-- APM 연동된 MDC 키들 출력 -->
+                <!-- MDC 기반 동적 필드 -->
                 <mdc>
-                    <includeKeys>trace.id,transaction.id,span.id,service.name</includeKeys>
+                    <includeKeys>
+                        SERVICE,CATEGORY,GLOBAL_NO,TOPOLOGY_SEQ,TRANSACTION_ID,TRACE_ID
+                    </includeKeys>
                 </mdc>
 
-                <!-- 예외 정보 -->
-                <stackTrace>
-                    <fieldName>stacktrace</fieldName>
-                </stackTrace>
+                <!-- 메시지: HEADER / MESSAGE -->
+                <arguments/>
+                <stackTrace/>
             </providers>
         </encoder>
     </appender>

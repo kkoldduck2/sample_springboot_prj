@@ -1,31 +1,45 @@
 package com.example.demo.config;
-import jakarta.servlet.*;
+
+import com.example.demo.logging.LoggingContextUtil;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
+
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class TraceFilter implements Filter {
-    private static final String HEADER_GLOBAL_NO = "X-Global-No";
+
+    private static final String DEFAULT_TOPOLOGY = "1";
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+
+        HttpServletRequest httpReq = (HttpServletRequest) request;
+
+        String globalNo = httpReq.getHeader("X-Global-No");
+        String topologySeq = httpReq.getHeader("X-Topology-Seq");
+
+        if (globalNo == null || globalNo.isBlank()) globalNo = generateGlobalNo();
+        if (topologySeq == null || topologySeq.isBlank()) topologySeq = DEFAULT_TOPOLOGY;
+
+        LoggingContextUtil.initContext(globalNo, topologySeq);
         try {
-            HttpServletRequest request = (HttpServletRequest) req;
-
-            // 비즈니스 추적용 globalNo
-            String globalNo = request.getHeader(HEADER_GLOBAL_NO);
-            if (globalNo != null && !globalNo.isBlank()) {
-                MDC.put("globalNo", globalNo);
-            }
-
-            // APM trace.id는 Agent가 MDC에 자동으로 넣음 (enable_log_correlation=true)
-
-            chain.doFilter(req, res);
+            chain.doFilter(request, response);
         } finally {
-            MDC.clear();
+            LoggingContextUtil.clear();
         }
+    }
+
+    private String generateGlobalNo() {
+        return "000009" + System.currentTimeMillis();
     }
 }
