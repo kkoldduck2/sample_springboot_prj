@@ -14,7 +14,7 @@ COPY target/*.jar /app/app.jar
 ENTRYPOINT ["sh", "-c", "java \
   -javaagent:/app/elastic-apm-agent.jar \
   -Delastic.apm.service_name=my-springboot-apm-app \
-  -Delastic.apm.server_urls=${ELASTIC_APM_SERVER_URLS} \
+  -Delastic.apm.server_urls=${ELASTIC_APM_SERVER_URL} \
   -Delastic.apm.secret_token=${ELASTIC_APM_SECRET_TOKEN} \
   -Delastic.apm.application_packages=com.example.demo \
   -Delastic.apm.environment=prd \
