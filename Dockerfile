@@ -19,4 +19,5 @@ ENTRYPOINT ["sh", "-c", "java \
   -Delastic.apm.application_packages=com.example.demo \
   -Delastic.apm.environment=prd \
   -Delastic.apm.enable_log_correlation=true \
+  -Delastic.apm.verify_server_cert=false \
   -jar app.jar"]
