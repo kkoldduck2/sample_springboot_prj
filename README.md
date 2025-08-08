@@ -44,3 +44,48 @@ Maven 3.8+ (권장)
 ```bash
 curl http://localhost:8080/start
 ```
+
+# 배포
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-app
+  template:
+    metadata:
+      labels:
+        app: spring-app
+    spec:
+      containers:
+      - name: spring-app
+        image: kkoldduck2/my-springboot-apm-app:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ELASTIC_APM_SERVER_URL
+          value: "https://fleet-server-quickstart-agent-http.default.svc:8200"
+        - name: ELASTIC_APM_SERVICE_NAME
+          value: "my-spring-service"
+        - name: ELASTIC_APM_SECRET_TOKEN
+          value: ""  # 토큰 쓰는 경우 입력
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: spring-app
+  ports:
+  - port: 80
+    targetPort: 8080
+```
+
+
