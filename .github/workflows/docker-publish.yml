@@ -42,7 +42,5 @@ jobs:
           push: true
           tags: ${{ env.DOCKER_REPO }}:latest
           build-args: |
-            ELASTIC_APM_SERVER_URLS=${{ secrets.APM_SERVER_URLS }}
-            ELASTIC_APM_SECRET_TOKEN=${{ secrets.APM_SECRET_TOKEN }}
             ELASTIC_APM_PACKAGES=com.example
             ELASTIC_APM_ENVIRONMENT=prod
