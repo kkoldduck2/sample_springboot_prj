@@ -68,7 +68,7 @@ spec:
         - containerPort: 8080
         env:
         - name: ELASTIC_APM_SERVER_URL
-          value: "https://fleet-server-quickstart-agent-http.default.svc:8200"
+          value: "https://apm-server-quickstart-apm-http.default.svc:8200"
         - name: ELASTIC_APM_SERVICE_NAME
           value: "my-spring-service"
         - name: ELASTIC_APM_SECRET_TOKEN
