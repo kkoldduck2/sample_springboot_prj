@@ -47,9 +47,9 @@ public class PerformanceTestController {
 	 * @return 지연 및 실패가 반영된 응답
 	 * @throws InterruptedException
 	 */
-	@LogTransaction(svcName = "/secnario")
+	@LogTransaction(svcName = "/scenario")
     @PostMapping("scenario")
-    public ResponseEntity<String> secnario(@RequestBody TestScenario secnario) throws InterruptedException {
+    public ResponseEntity<String> scenario(@RequestBody TestScenario secnario) throws InterruptedException {
 		//System.out.println("testWithScenario = " + scenario.toString());
 		//LoggingContextUtil.initContext(LogUtil.getGlobalNo(), "1");
         return perfomance(secnario);
@@ -80,7 +80,7 @@ public class PerformanceTestController {
         
         if(scenario.getRandomCompositApiCall()) {
         	int apiCallCnt = 1 + random.nextInt(9);
-        	System.out.println("[apiCallCnt] : " + apiCallCnt);
+        	//System.out.println("[apiCallCnt] : " + apiCallCnt);
         	scenario.setCompositApiCallCnt( apiCallCnt);
         }
         
