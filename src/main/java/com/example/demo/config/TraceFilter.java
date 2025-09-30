@@ -1,20 +1,19 @@
 package com.example.demo.config;
 
+import java.io.IOException;
+
+import org.springframework.stereotype.Component;
+
 import com.example.demo.logging.LoggingContextUtil;
+
+import co.elastic.apm.api.ElasticApm;
+import co.elastic.apm.api.Transaction;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import org.slf4j.MDC;
-import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import co.elastic.apm.api.ElasticApm;
-import co.elastic.apm.api.Transaction;
 
 @Component
 public class TraceFilter implements Filter {

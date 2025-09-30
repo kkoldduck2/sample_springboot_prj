@@ -2,10 +2,12 @@ package com.example.demo.logging;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 public class RestTemplateUtil {
     public static HttpEntity<Object> buildRequestWithTracingHeaders(Object body, int topologyStepIndex) {
         HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("X-Global-No", LoggingContextUtil.getGlobalNo());
         headers.set("X-Topology-Seq", LoggingContextUtil.nextTopologySeq(topologyStepIndex));
         return new HttpEntity<>(body, headers);
@@ -15,3 +17,4 @@ public class RestTemplateUtil {
         return buildRequestWithTracingHeaders(null, topologyStepIndex);
     }
 }
+

@@ -1,12 +1,12 @@
 package com.example.demo.config;
 
 
+import java.util.List;
+
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 @Configuration
 public class RestTemplateConfig {
